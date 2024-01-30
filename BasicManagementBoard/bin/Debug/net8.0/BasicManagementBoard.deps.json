@@ -9,6 +9,7 @@
       "BasicManagementBoard/1.0.0": {
         "dependencies": {
           "Dapper": "2.1.28",
+          "Dapper.Contrib": "2.0.78",
           "Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter": "8.0.1",
           "Microsoft.AspNetCore.OpenApi": "7.0.13",
           "Microsoft.EntityFrameworkCore": "8.0.1",
@@ -16,6 +17,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.1",
           "Microsoft.Extensions.Configuration": "8.0.0",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.19.5",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "8.0.0",
           "MySql.Data": "8.3.0",
           "MySql.Data.EntityFrameworkCore": "8.0.22",
@@ -75,6 +77,17 @@
           "lib/net7.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.28.55233"
+          }
+        }
+      },
+      "Dapper.Contrib/2.0.78": {
+        "dependencies": {
+          "Dapper": "2.1.28"
+        },
+        "runtime": {
+          "lib/net5.0/Dapper.Contrib.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.78.45418"
           }
         }
       },
@@ -1575,6 +1588,7 @@
           }
         }
       },
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.19.5": {},
       "Microsoft.VisualStudio.Web.CodeGeneration/8.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "8.0.0",
@@ -2272,6 +2286,13 @@
       "sha512": "sha512-ha49pzOEDmCPkMxwfPSR/wxa/6RD3r42TESIgpzpi7FXq/gNVUuJVEO+wtUzntNRhtmq3BKCl0s0aAlSZLkBUA==",
       "path": "dapper/2.1.28",
       "hashPath": "dapper.2.1.28.nupkg.sha512"
+    },
+    "Dapper.Contrib/2.0.78": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sUfDVIf8LlHNiz3MfUFodeyRiemfN1JFkPxYjCxFWlwNPg1iQ49mB+0E89TkywWs4X8fiRWOVDQgtH5FtzK5Kw==",
+      "path": "dapper.contrib/2.0.78",
+      "hashPath": "dapper.contrib.2.0.78.nupkg.sha512"
     },
     "Google.Protobuf/3.25.1": {
       "type": "package",
@@ -3091,6 +3112,13 @@
       "sha512": "sha512-N4KeF3cpcm1PUHym1RmakkzfkEv3GRMyofVv40uXsQhCQeglr2OHNcUk2WOG51AKpGO8ynGpo9M/kFXSzghwug==",
       "path": "microsoft.sqlserver.server/1.0.0",
       "hashPath": "microsoft.sqlserver.server.1.0.0.nupkg.sha512"
+    },
+    "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.19.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Kaa1rBZdJFq5A0qgAcl6Bmk/UqLXTq9acEqxUlPEBA8oscmakLfkvuSXfG7Wa9t1/keaT85EuuDNgOo+Z9VYOQ==",
+      "path": "microsoft.visualstudio.azure.containers.tools.targets/1.19.5",
+      "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.19.5.nupkg.sha512"
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/8.0.0": {
       "type": "package",

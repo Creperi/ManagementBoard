@@ -1,4 +1,6 @@
-﻿namespace BasicManagementBoard.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BasicManagementBoard.Models
 {
     public class TaskItem
     {

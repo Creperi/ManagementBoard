@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MySqlConnector;
 using System;
 using System.IO;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +30,14 @@ builder.Services.AddDbContext<ProjectContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("Default"), new MySqlServerVersion(new Version(8, 0, 27))));
 
 //API Explorer for endpoint information
+
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Management Board API", Version = "v1" });
+});
 
 //Swagger for API documentation
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -40,11 +46,15 @@ if (app.Environment.IsDevelopment())
 {
     //Swagger UI in development environment
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Management Board API V1");
+    });
 }
+app.UseRouting();
 
-// Enable HTTPS redirection
-app.UseHttpsRedirection();
+app.UseCors(options => options.AllowAnyOrigin());
+
 
 // Enable authorization (if needed)
 app.UseAuthorization();

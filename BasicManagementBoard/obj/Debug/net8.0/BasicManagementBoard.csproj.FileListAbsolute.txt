@@ -280,3 +280,4 @@ C:\Users\elias\OneDrive\Desktop\BasicManagementBoard\BasicManagementBoard\bin\De
 C:\Users\elias\OneDrive\Desktop\BasicManagementBoard\BasicManagementBoard\bin\Debug\net8.0\MySqlConnector.DependencyInjection.dll
 C:\Users\elias\OneDrive\Desktop\BasicManagementBoard\BasicManagementBoard\bin\Debug\net8.0\MySql.Data.EntityFrameworkCore.dll
 C:\Users\elias\OneDrive\Desktop\BasicManagementBoard\BasicManagementBoard\bin\Debug\net8.0\Dapper.dll
+C:\Users\elias\OneDrive\Desktop\BasicManagementBoard\BasicManagementBoard\bin\Debug\net8.0\Dapper.Contrib.dll

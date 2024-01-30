@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS managementboard;
 USE managementboard;
 
 CREATE TABLE IF NOT EXISTS PROJECT(
-    PROJECTID INT PRIMARY KEY,
+    PROJECTID INT UNIQUE PRIMARY KEY,
     TITLE VARCHAR(100),
     DESCRIPTION VARCHAR(100),
     NAME VARCHAR(80),
@@ -23,6 +23,6 @@ CREATE TABLE IF NOT EXISTS TASK(
 );
 
 INSERT INTO PROJECT (PROJECTID, TITLE, DESCRIPTION, NAME, PROGRESS, STARTDATE, FINISHDATE)
-VALUES (1, 'Cleaning my bedroom', 'Because I want to spot my things easier', 'My bedroom was always messy', 1, '2024-01-29', '2024-01-31');
+VALUES (1, 'Cleaning my bedroom', 'Because I want to spot my things easier', 'Elias', 1, '2024-01-29', '2024-01-31');
 INSERT INTO TASK (TASKID, PROJECTID, DESCRIPTION, PROGRESS, STATUS, STARTDATE, FINISHDATE)
-VALUES (1, 1, 'Tidying my clothes in my closet', 25, "IN-PROGRESS" ,'2024-01-29', '2024-01-31');
+VALUES (1, 1, 'Tidying my clothes in my closet', 25, "PROGRESS" ,'2024-01-29', '2024-01-31');

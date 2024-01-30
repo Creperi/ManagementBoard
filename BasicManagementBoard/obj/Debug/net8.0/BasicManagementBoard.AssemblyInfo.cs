@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BasicManagementBoard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca403dfac20e1d1a9bfbe609eb1356da41d6b118")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11023a2243736d0163060f48021afec22400361d")]
 [assembly: System.Reflection.AssemblyProductAttribute("BasicManagementBoard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BasicManagementBoard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

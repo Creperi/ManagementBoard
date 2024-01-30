@@ -35,9 +35,9 @@ namespace BasicManagementBoard.Controllers
         {
             using var connection = await _db.OpenConnectionAsync();
 
-            // Using Dapper's QueryFirstOrDefaultAsync to retrieve a single row
+            // Using QueryFirstOrDefaultAsync to retrieve the desired row
             return await connection.QueryFirstOrDefaultAsync<ProjectItem>(
-                @"SELECT * FROM `PROJECT` WHERE `PROJECTID` = @id",
+                @"SELECT * FROM `PROJECT` WHERE `PROJECTID` = @Id",
                 new { id }
             );
         }
@@ -47,10 +47,16 @@ namespace BasicManagementBoard.Controllers
         {
             using var connection = await _db.OpenConnectionAsync();
 
-            // Use Dapper's ExecuteAsync to perform the update
+            // Using ExecuteAsync to perform the update
             var affectedRows = await connection.ExecuteAsync(
-                @"UPDATE `PROJECT` SET `PROJECTID` = @projectId, `TITLE = @title`, `DESCRIPTION` = @description, `PROGRESS` = @Progress, `NAME` = @Name, `STARTDATE` = @StartDate, `FINISHDATE` = @FinishDate  WHERE `PROJECTID` = @Id;",
-                new { Id = projectItem.Id, description = projectItem.description, name = projectItem.name, progress = projectItem.progress, startDate = projectItem.startDate, finishDate = projectItem.finishDate }
+                @"UPDATE `PROJECT` SET `PROJECTID` = @Id, `TITLE = @title`, `DESCRIPTION` = @description, `NAME` = @name, `PROGRESS` = @progress, `STARTDATE` = @startDate, `FINISHDATE` = @finishDate  WHERE `PROJECTID` = @Id;",
+                new { Id = projectItem.Id,
+                    title = projectItem.title,
+                    description = projectItem.description,
+                    name = projectItem.name,
+                    progress = projectItem.progress, 
+                    startDate = projectItem.startDate, 
+                    finishDate = projectItem.finishDate }
             );
 
             if (affectedRows > 0)
@@ -68,12 +74,24 @@ namespace BasicManagementBoard.Controllers
 
             // Use Dapper's ExecuteAsync to perform the insertion
             await connection.ExecuteAsync(
-                @"INSERT INTO `PROJECT` (`PROJECTID`, `TITLE`, `DESCRIPTION`, `NAME`, `PROGRESS`, `STARTDATE`, `FINISHDATE`) VALUES (@ProjectId, @Description, @Progress, @Status, @StartDate, @FinishDate)",
-                new { Id = projectItem.Id, description = projectItem.description, name = projectItem.name, progress = projectItem.progress, startDate = projectItem.startDate, finishDate = projectItem.finishDate }
+                @"INSERT INTO `PROJECT` (`PROJECTID`, `TITLE`, `DESCRIPTION`, `NAME`, `PROGRESS`, `STARTDATE`, `FINISHDATE`) VALUES (@Id, @Title, @Description, @Name, @Progress, @Status, @StartDate, @FinishDate)",
+                new { Id = projectItem.Id,
+                    title = projectItem.title,
+                    description = projectItem.description, 
+                    name = projectItem.name, 
+                    progress = projectItem.progress, 
+                    startDate = projectItem.startDate, 
+                    finishDate = projectItem.finishDate }
             );
-
-            // Return 201 Created on success, along with the created taskItem
-            return CreatedAtAction(nameof(GetProjectItem), new { id = projectItem.Id }, projectItem);
+            if ((projectItem.progress < 100 || projectItem.progress > 0))
+            {
+                return CreatedAtAction(nameof(GetProjectItem), new { id = projectItem.Id }, projectItem);// Return 201 Created on success, along with the created taskItem
+            }
+            else
+            {
+                return BadRequest("Progress should be between 0 and 100");
+            }
+            
         }
 
         //Deleting a record by its id
@@ -89,12 +107,7 @@ namespace BasicManagementBoard.Controllers
                 return NoContent(); // Return 204 No Content on success
             }
 
-            return NotFound(); // Return 404 Not Found if the task with the specified id is not found
-        }
-
-        private bool TaskItemExists(long id)
-        {
-            return _context.ProjectItems?.Any(e => e.Id == id) ?? false;
+            return NotFound(); // Return 404 Not Found
         }
     }
 }
