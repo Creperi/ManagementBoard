@@ -25,7 +25,7 @@ namespace BasicManagementBoard.Controllers
         public async Task<IReadOnlyList<TaskItem>> GetTaskItems()
         {
             using var connection = await _db.OpenConnectionAsync();
-            var query = "SELECT * FROM `TASK` ORDER BY `TASKID` DESC LIMIT 10;";
+            var query = "SELECT * FROM `TASK` ORDER BY `ID`";
             return (IReadOnlyList<TaskItem>)await connection.QueryAsync<TaskItem>(query);
         }
 
@@ -36,7 +36,7 @@ namespace BasicManagementBoard.Controllers
 
             // Using Dapper's QueryFirstOrDefaultAsync to retrieve a single row
             return await connection.QueryFirstOrDefaultAsync<TaskItem>(
-                @"SELECT * FROM `TASK` WHERE `TASKID` = @Id",
+                @"SELECT * FROM `TASK` WHERE `ID` = @id",
                 new { id }
             );
         }
@@ -48,8 +48,15 @@ namespace BasicManagementBoard.Controllers
 
             // Use Dapper's ExecuteAsync to perform the update
             var affectedRows = await connection.ExecuteAsync(
-                @"UPDATE `TASK` SET `PROJECTID` = @projectId, `DESCRIPTION` = @Description, `PROGRESS` = @Progress, `STATUS` = @Status, `STARTDATE` = @StartDate, `FINISHDATE` = @FinishDate  WHERE `TASKID` = @Id;",
-                new { projectId = taskItem.projectId, description = taskItem.description, progress = taskItem.progress, status = taskItem.status, startDate = taskItem.startDate, finishDate = taskItem.finishDate }
+                @"UPDATE `TASK` SET `PROJECTID` = @ProjectId, `DESCRIPTION` = @Description, `PROGRESS` = @Progress, `STATUS` = @Status, `STARTDATE` = @StartDate, `FINISHDATE` = @FinishDate  WHERE `ID` = @Id;",
+                new { ProjectId = taskItem.projectId, 
+                    Description = taskItem.description, 
+                    Progress = taskItem.progress, 
+                    Status = taskItem.status, 
+                    StartDate = taskItem.startDate, 
+                    FinishDate = taskItem.finishDate,
+                    Id = id
+                }
             );
 
             if (affectedRows > 0)
@@ -67,8 +74,8 @@ namespace BasicManagementBoard.Controllers
 
             // Using ExecuteAsync to perform the insertion
             await connection.ExecuteAsync(
-                @"INSERT INTO `TASK` (`TASKID`, `PROJECTID`, `DESCRIPTION`, `PROGRESS`, `STATUS`, `STARTDATE`, `FINISHDATE`) VALUES (@Id, @ProjectId, @Description, @Progress, @Status, @StartDate, @FinishDate)",
-                new { Id = taskItem.Id, projectId = taskItem.projectId, description = taskItem.description, progress = taskItem.progress, status = taskItem.status, startDate = taskItem.startDate, finishDate = taskItem.finishDate }
+                @"INSERT INTO `TASK` (`ID`, `PROJECTID`, `DESCRIPTION`, `PROGRESS`, `STATUS`, `STARTDATE`, `FINISHDATE`) VALUES (@Id, @ProjectId, @Description, @Progress, @Status, @StartDate, @FinishDate)",
+                new { Id = taskItem.Id, ProjectId = taskItem.projectId, Description = taskItem.description, Progress = taskItem.progress, Status = taskItem.status, StartDate = taskItem.startDate, FinishDate = taskItem.finishDate }
             );
 
             if ((taskItem.progress == 0 && taskItem.status == "TODO")
@@ -88,7 +95,7 @@ namespace BasicManagementBoard.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             using var connection = await _db.OpenConnectionAsync();
-            var query = "DELETE FROM `TASK` WHERE `TASKID` = @Id;";
+            var query = "DELETE FROM `TASK` WHERE `ID` = @Id;";
             var affectedRows = await connection.ExecuteAsync(query, new { Id = id });
 
             if (affectedRows > 0)

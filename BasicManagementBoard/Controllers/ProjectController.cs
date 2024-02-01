@@ -26,7 +26,7 @@ namespace BasicManagementBoard.Controllers
         public async Task<IReadOnlyList<ProjectItem>> GetProjectItems()
         {
             using var connection = await _db.OpenConnectionAsync();
-            var query = "SELECT * FROM `PROJECT` ORDER BY `PROJECTID` DESC LIMIT 10;";
+            var query = "SELECT * FROM `PROJECT` ORDER BY `ID` DESC LIMIT 10;";
             return (IReadOnlyList<ProjectItem>)await connection.QueryAsync<ProjectItem>(query);
         }
 
@@ -37,7 +37,7 @@ namespace BasicManagementBoard.Controllers
 
             // Using QueryFirstOrDefaultAsync to retrieve the desired row
             return await connection.QueryFirstOrDefaultAsync<ProjectItem>(
-                @"SELECT * FROM `PROJECT` WHERE `PROJECTID` = @Id",
+                @"SELECT * FROM `PROJECT` WHERE `ID` = @Id",
                 new { id }
             );
         }
@@ -49,14 +49,14 @@ namespace BasicManagementBoard.Controllers
 
             // Using ExecuteAsync to perform the update
             var affectedRows = await connection.ExecuteAsync(
-                @"UPDATE `PROJECT` SET `PROJECTID` = @Id, `TITLE = @title`, `DESCRIPTION` = @description, `NAME` = @name, `PROGRESS` = @progress, `STARTDATE` = @startDate, `FINISHDATE` = @finishDate  WHERE `PROJECTID` = @Id;",
-                new { Id = projectItem.Id,
-                    title = projectItem.title,
-                    description = projectItem.description,
-                    name = projectItem.name,
-                    progress = projectItem.progress, 
-                    startDate = projectItem.startDate, 
-                    finishDate = projectItem.finishDate }
+                @"UPDATE `PROJECT` SET `ID` = @Id, `TITLE = @Title`, `DESCRIPTION` = @Description, `NAME` = @Name, `PROGRESS` = @Progress, `STARTDATE` = @StartDate, `FINISHDATE` = @FinishDate  WHERE `ID` = @Id;",
+                new { Id = id,
+                    Title = projectItem.title,
+                    Description = projectItem.description,
+                    Name = projectItem.name,
+                    Progress = projectItem.progress, 
+                    StartDate = projectItem.startDate, 
+                    FinishDate = projectItem.finishDate }
             );
 
             if (affectedRows > 0)
@@ -74,14 +74,14 @@ namespace BasicManagementBoard.Controllers
 
             // Use Dapper's ExecuteAsync to perform the insertion
             await connection.ExecuteAsync(
-                @"INSERT INTO `PROJECT` (`PROJECTID`, `TITLE`, `DESCRIPTION`, `NAME`, `PROGRESS`, `STARTDATE`, `FINISHDATE`) VALUES (@Id, @Title, @Description, @Name, @Progress, @Status, @StartDate, @FinishDate)",
+                @"INSERT INTO `PROJECT` (`ID`, `TITLE`, `DESCRIPTION`, `NAME`, `PROGRESS`, `STARTDATE`, `FINISHDATE`) VALUES (@Id, @Title, @Description, @Name, @Progress, @StartDate, @FinishDate)",
                 new { Id = projectItem.Id,
-                    title = projectItem.title,
-                    description = projectItem.description, 
-                    name = projectItem.name, 
-                    progress = projectItem.progress, 
-                    startDate = projectItem.startDate, 
-                    finishDate = projectItem.finishDate }
+                    Title = projectItem.title,
+                    Description = projectItem.description, 
+                    Name = projectItem.name, 
+                    Progress = projectItem.progress, 
+                    StartDate = projectItem.startDate, 
+                    FinishDate = projectItem.finishDate }
             );
             if ((projectItem.progress < 100 || projectItem.progress > 0))
             {
@@ -99,7 +99,7 @@ namespace BasicManagementBoard.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             using var connection = await _db.OpenConnectionAsync();
-            var query = "DELETE FROM `PROJECT` WHERE `PROJECTID` = @Id;";
+            var query = "DELETE FROM `PROJECT` WHERE `ID` = @Id;";
             var affectedRows = await connection.ExecuteAsync(query, new { Id = id });
 
             if (affectedRows > 0)
